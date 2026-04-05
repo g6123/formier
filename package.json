@@ -1,0 +1,29 @@
+{
+  "name": "formier",
+  "type": "module",
+  "dependencies": {
+    "react-merge-refs": "^3.0.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.37.0",
+    "@tsconfig/node24": "^24.0.4",
+    "@types/node": "^24.6.2",
+    "@types/react": "^19.2.14",
+    "eslint": "^9.37.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^6.1.1",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "prettier": "^3.6.2",
+    "react": "^19.2.4",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.45.0",
+    "vitest": "^4.1.2"
+  },
+  "peerDependencies": {
+    "react": "^18 || ^19"
+  },
+  "packageManager": "pnpm@10.33.0+sha512.10568bb4a6afb58c9eb3630da90cc9516417abebd3fabbe6739f0ae795728da1491e9db5a544c76ad8eb7570f5c4bb3d6c637b2cb41bfdcdb47fa823c8649319"
+}
