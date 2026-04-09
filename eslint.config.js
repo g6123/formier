@@ -1,5 +1,5 @@
 import js from '@eslint/js';
-import { defineConfig } from 'eslint/config';
+import { defineConfig, globalIgnores } from 'eslint/config';
 import import_ from 'eslint-plugin-import';
 import prettier from 'eslint-plugin-prettier/recommended';
 import react from 'eslint-plugin-react';
@@ -28,6 +28,7 @@ const simpleImportSortGroups = [
 ];
 
 export default defineConfig(
+  globalIgnores(['dist/']),
   js.configs.recommended,
   ts.configs.recommended,
   {

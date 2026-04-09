@@ -3,11 +3,10 @@
   "compilerOptions": {
     "jsx": "preserve",
     "noUncheckedIndexedAccess": true,
-    "outDir": "dist",
+    "outDir": "./dist",
     "sourceMap": true,
     "declaration": true,
-    "declarationMap": true,
-    "composite": true
+    "declarationMap": true
   },
   "include": ["src"]
 }
