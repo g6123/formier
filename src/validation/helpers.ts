@@ -2,10 +2,6 @@ import { getErrorMessage } from '../internal/misc.js';
 import { ValidationResult } from './result.js';
 import { Validator } from './validator.js';
 
-export const skip = <T>(): Validator<T, T> => ({
-  validate: (input) => ValidationResult.valid(input),
-});
-
 export const fn = <Input, Value>(validate: (input: Input) => ValidationResult<Value>): Validator<Input, Value> => ({
   validate: (input) => {
     try {
@@ -45,3 +41,15 @@ export const asyncFn = <Input, Value>(
     },
   };
 };
+
+export const skip = <T>(): Validator<T, T> => ({
+  validate: (input) => ValidationResult.valid(input),
+});
+
+export const required = <T extends {}>(message?: string): Validator<T | null, T> => ({
+  validate: (input) => (input != null ? ValidationResult.valid(input) : ValidationResult.invalid(message)),
+});
+
+export const nonEmpty = (message?: string): Validator<string, string> => ({
+  validate: (input) => (input !== '' ? ValidationResult.valid(input) : ValidationResult.invalid(message)),
+});
