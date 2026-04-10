@@ -104,10 +104,8 @@ export class ValidationResult<T> {
       return this.pending(Promise.all(array.map((state) => state.toPromise())).then(this.allElements));
     }
 
-    for (const result of array) {
-      if (!result.ok) {
-        return this.invalid(result.message);
-      }
+    if (array.some((result) => !result.ok)) {
+      return this.invalid();
     }
 
     return this.valid(array.map((result) => result.unwrap()));
@@ -130,10 +128,8 @@ export class ValidationResult<T> {
       );
     }
 
-    for (const [, result] of entries) {
-      if (!result.ok) {
-        return this.invalid(result.message);
-      }
+    if (entries.some(([, result]) => !result.ok)) {
+      return this.invalid();
     }
 
     return this.valid(Object.fromEntries(entries.map(([key, result]) => [key, result.unwrap()])));
