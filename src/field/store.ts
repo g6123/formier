@@ -5,7 +5,7 @@ import { Validator } from '../validation/validator.js';
 import type { Field, FieldElement } from './types.js';
 
 export class FieldStore<Input, Value> implements Field<Input, Value> {
-  ref: React.RefObject<FieldElement | null>;
+  ref: React.RefObject<FieldElement>;
   input: Atom<Input>;
   state: Atom<ValidationResult<Value>>;
 
