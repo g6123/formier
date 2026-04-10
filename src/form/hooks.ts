@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { FormStore } from './store.js';
+import { MaybeLazy } from '../internal/lazy.js';
 import { type FormFields } from './types.js';
 
-export interface UseFormOptions<FieldsT extends FormFields> {
-  fields: FieldsT | (() => FieldsT);
+export interface UseFormOptions<Fields extends FormFields> {
+  fields: MaybeLazy<Fields>;
 }
 
 export function useForm<FieldsT extends FormFields>({ fields: fieldsOpt }: UseFormOptions<FieldsT>) {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Atom, atom } from '../internal/atom.js';
+import { evaluate, MaybeLazy } from '../internal/lazy.js';
 import { INIT, ValidationResult } from '../validation/result.js';
 import { Validator } from '../validation/validator.js';
 import type { Field, FieldElement } from './types.js';
@@ -12,12 +13,16 @@ export class FieldStore<Input, Value> implements Field<Input, Value> {
   private defaultInput: Input;
   private validator: Validator<Input, Value>;
 
-  constructor(defaultInput: Input, defaultState: ValidationResult<Value>, validator: Validator<Input, Value>) {
+  constructor(
+    defaultInput: Input,
+    defaultState: ValidationResult<Value>,
+    validator: MaybeLazy<Validator<Input, Value>>,
+  ) {
     this.ref = { current: null };
     this.defaultInput = defaultInput;
     this.input = atom(defaultInput);
     this.state = atom(defaultState);
-    this.validator = validator;
+    this.validator = evaluate(validator);
   }
 
   focus() {

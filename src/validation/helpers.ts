@@ -1,3 +1,4 @@
+import { Lazy } from '../internal/lazy.js';
 import { getErrorMessage } from '../internal/misc.js';
 import { ValidationResult } from './result.js';
 import { Validator } from './validator.js';
@@ -14,31 +15,33 @@ export const fn = <Input, Value>(validate: (input: Input) => ValidationResult<Va
 
 export const asyncFn = <Input, Value>(
   validate: (input: Input, signal: AbortSignal) => Promise<ValidationResult<Value>>,
-): Validator<Input, Value> => {
-  let controller: AbortController | null = null;
+): Lazy<Validator<Input, Value>> => {
+  return () => {
+    let controller: AbortController | null = null;
 
-  return {
-    validate: (input) => {
-      if (controller != null) {
-        controller.abort();
-      }
-
-      const { signal } = (controller = new AbortController());
-      const promise = validate(input, signal).catch((error) => {
-        if (signal.aborted) {
-          throw error;
+    return {
+      validate: (input) => {
+        if (controller != null) {
+          controller.abort();
         }
 
-        return ValidationResult.invalid(getErrorMessage(error));
-      });
-      return ValidationResult.pending(promise);
-    },
-    cancel: () => {
-      if (controller != null) {
-        controller.abort();
-        controller = null;
-      }
-    },
+        const { signal } = (controller = new AbortController());
+        const promise = validate(input, signal).catch((error) => {
+          if (signal.aborted) {
+            throw error;
+          }
+
+          return ValidationResult.invalid(getErrorMessage(error));
+        });
+        return ValidationResult.pending(promise);
+      },
+      cancel: () => {
+        if (controller != null) {
+          controller.abort();
+          controller = null;
+        }
+      },
+    };
   };
 };
 
