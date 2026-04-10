@@ -1,0 +1,129 @@
+# field()
+
+Factory function that creates a field store.
+
+## Import
+
+```ts
+import { field } from 'formier';
+```
+
+## Overloads
+
+### `field(defaultInput)`
+
+Creates a field with a default input value and no validation. Any input is valid and the output type equals the input
+type.
+
+**Signature:**
+
+```ts
+function field<T extends {}>(defaultInput: T): Field<T, T>;
+```
+
+**Examples:**
+
+```ts
+const name = field(''); // Field<string, string>
+const count = field(0); // Field<number, number>
+const tags = field<string[]>([]); // Field<string[], string[]>
+```
+
+---
+
+### `field(validator)`
+
+Creates a field with a validator. The input is initialized with `null`. Use this when the field starts empty input and
+the validator handles the `null` case.
+
+**Signature:**
+
+```ts
+function field<Input, Value>(validate: Validator<Input, Value>): Field<Input, Value>;
+```
+
+**Example:**
+
+```ts
+// Input is number | null, but after v.required the output is number
+const age = field(v.required<number>('Age is required'));
+// Field<number | null, number>
+```
+
+---
+
+### `field(defaultInput, validator)`
+
+Creates a field with both a default input value and a validator.
+
+**Signature:**
+
+```ts
+function field<Input, Value>(defaultInput: Input, validate: Validator<Input, Value>): Field<Input, Value>;
+```
+
+**Examples:**
+
+```ts
+const username = field('', v.nonEmpty('Username is required'));
+// Field<string, string>
+
+const email = field('', isEmail);
+// Field<string, string>  (where isEmail is a custom Validator<string, string>)
+```
+
+---
+
+## Returns
+
+`Field<Input, Value>`
+
+A field store object that holds state and can be passed to `<Field>` or `useField()`.
+
+### Properties
+
+| Property | Type                            | Description                                                        |
+| -------- | ------------------------------- | ------------------------------------------------------------------ |
+| `ref`    | `React.Ref<FieldElement>`       | Attach to the DOM element to enable auto-focus on validation error |
+| `input`  | `ReadonlyAtom<Input>`           | Reactive atom holding the current input value                      |
+| `state`  | `ReadonlyAtom<v.result<Value>>` | Reactive atom holding the current validation result                |
+
+### Methods
+
+| Method              | Description                                                                                              |
+| ------------------- | -------------------------------------------------------------------------------------------------------- |
+| `set(input: Input)` | Set a new input value. Resets validation state and cancels any pending async validation.                 |
+| `reset()`           | Reset the field to its `defaultInput`. Resets validation state and cancels any pending async validation. |
+| `validate()`        | Run the validator against the current input and subscribe to state updates. Returns `v.result<Value>`.   |
+| `focus()`           | Focus the DOM element referenced by `ref` and scroll it into view.                                       |
+
+## Usage Notes
+
+Field stores should be created **once** and remain stable across renders. The recommended pattern is to pass a factory
+function to `useForm`:
+
+```ts
+const { fields } = useForm({
+  fields: () => ({
+    // factory function — called once on mount
+    email: field('', isEmail),
+    password: field('', v.nonEmpty()),
+  }),
+});
+```
+
+If you create a field outside `useForm`, wrap it in `useState`:
+
+```ts
+const [myField] = useState(() => field(''));
+```
+
+Do **not** create fields at the top level of a component body without memoization:
+
+```ts
+// BAD — creates a new field store on every render
+function MyForm() {
+  const nameField = field(''); // recreated on every render!
+  ...
+}
+```

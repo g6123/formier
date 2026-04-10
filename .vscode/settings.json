@@ -5,7 +5,7 @@
       "source.fixAll.eslint": "explicit"
     }
   },
-  "[json][jsonc][yaml][css][scss]": {
+  "[json][jsonc][yaml][css][scss][markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true
   },

@@ -5,11 +5,11 @@ import { Validator } from '../validation/validator.js';
 import { FieldStore } from './store.js';
 import { Field } from './types.js';
 
-export function field<Input, Value>(validate: MaybeLazy<Validator<Input, Value>>): Field<Input, Value>;
+export function field<Input, Value>(validator: MaybeLazy<Validator<Input, Value>>): Field<Input, Value>;
 export function field<T extends {}>(defaultInput: T): Field<T, T>;
 export function field<Input, Value>(
   defaultInput: Input,
-  validate: MaybeLazy<Validator<Input, Value>>,
+  validator: MaybeLazy<Validator<Input, Value>>,
 ): Field<Input, Value>;
 export function field(p0?: any, p1?: any): Field<any, any> {
   if (p1 != null) {
