@@ -2,21 +2,15 @@ import type React from 'react';
 import { ValidationResult } from '../validation/result.js';
 import type { Form, FormFields, FormValues } from './types.js';
 
-export class FormStore<Fields extends FormFields> implements Form<Fields> {
-  fields: Fields;
+export const createForm = <Fields extends FormFields>(fields: Fields): Form<Fields> => {
+  function validate() {
+    const fieldEntries = Object.entries(fields);
+    const resultEntries = fieldEntries.map(([key, field]) => [key, field.validate()] as const);
 
-  constructor(fields: Fields) {
-    this.fields = fields;
-  }
-
-  validate() {
-    const fields = Object.entries(this.fields);
-    const results = fields.map(([key, field]) => [key, field.validate()] as const);
-
-    Promise.all(results.map(([, result]) => result.toPromise())).then((resolvedStates) => {
+    Promise.all(resultEntries.map(([, result]) => result.toPromise())).then((resolvedStates) => {
       for (let i = 0; i < resolvedStates.length; i++) {
         const resolvedState = resolvedStates[i]!;
-        const [, field] = fields[i]!;
+        const [, field] = fieldEntries[i]!;
 
         if (!resolvedState.ok) {
           field.focus();
@@ -25,19 +19,21 @@ export class FormStore<Fields extends FormFields> implements Form<Fields> {
       }
     });
 
-    return ValidationResult.all(Object.fromEntries(results)) as ValidationResult<FormValues<Fields>>;
+    return ValidationResult.all(Object.fromEntries(resultEntries)) as ValidationResult<FormValues<Fields>>;
   }
 
-  reset() {
-    for (const field of Object.values(this.fields)) {
+  function reset() {
+    for (const field of Object.values(fields)) {
       field.reset();
     }
   }
 
-  handleSubmit(onValid?: (values: FormValues<Fields>) => void) {
+  function handleSubmit(onValid?: (values: FormValues<Fields>) => void) {
     return (event: React.SyntheticEvent) => {
-      this.validate().tap(onValid);
+      validate().tap(onValid);
       event.preventDefault();
     };
   }
-}
+
+  return { fields, validate, reset, handleSubmit };
+};
