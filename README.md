@@ -1,5 +1,7 @@
 # formtery
 
+![NPM Version](https://img.shields.io/npm/v/formtery)
+
 **formtery** is the foundation library for complex React-based form UIs, built in the right way.
 
 ## Installation

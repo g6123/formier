@@ -4,6 +4,12 @@
   "type": "module",
   "author": "cumul <gg6123@naver.com>",
   "repository": "github:g6123/formtery",
+  "homepage": "https://g6123.github.io/formtery",
+  "keywords": [
+    "ui",
+    "react",
+    "form"
+  ],
   "files": [
     "dist"
   ],
