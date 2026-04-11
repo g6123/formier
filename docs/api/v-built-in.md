@@ -1,6 +1,6 @@
 # Built-in Validators
 
-formier includes several built-in validators.
+formtery includes several built-in validators.
 
 ## v.skip()
 

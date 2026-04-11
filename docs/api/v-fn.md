@@ -5,7 +5,7 @@ Creates a synchronous validator from a plain function.
 ## Import
 
 ```ts
-import { v } from 'formier';
+import { v } from 'formtery';
 // use with `v.fn`
 ```
 

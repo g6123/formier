@@ -2,7 +2,7 @@
 layout: home
 
 hero:
-  name: 'formier'
+  name: 'formtery'
   text: 'The foundation for complex React forms, built in the right way'
   actions:
     - theme: brand

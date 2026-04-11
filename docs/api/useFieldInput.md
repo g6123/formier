@@ -9,7 +9,7 @@ React hook that subscribes only to a field's current input value, without subscr
 ## Import
 
 ```ts
-import { useFieldInput } from 'formier';
+import { useFieldInput } from 'formtery';
 ```
 
 ## Signature
@@ -34,7 +34,7 @@ validation state changes.
 ## Example: Character Counter
 
 ```tsx
-import { useFieldInput } from 'formier';
+import { useFieldInput } from 'formtery';
 
 function CharCounter({ store }: { store: Field<string, string> }) {
   const value = useFieldInput(store);

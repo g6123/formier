@@ -9,7 +9,7 @@ React hook that subscribes to a field store and returns the current value, valid
 ## Import
 
 ```ts
-import { useField } from 'formier';
+import { useField } from 'formtery';
 ```
 
 ## Signature
@@ -41,7 +41,7 @@ The component re-renders whenever the field's `input` or `state` changes.
 ## Example: Custom Input Component
 
 ```tsx
-import { useField, type Field } from 'formier';
+import { useField, type Field } from 'formtery';
 
 interface TextInputProps {
   store: Field<string, string>;
@@ -77,7 +77,7 @@ Use it in a form:
 
 ## Ref Forwarding
 
-If you need to attach your own ref to the element alongside formier's internal ref, pass it as the second argument. The
+If you need to attach your own ref to the element alongside formtery's internal ref, pass it as the second argument. The
 refs are merged automatically.
 
 ```tsx

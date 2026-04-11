@@ -1,6 +1,6 @@
 # Validation
 
-Validation in formier is a process in which user inputs are checked against domain constraints, and parsed into the
+Validation in formtery is a process in which user inputs are checked against domain constraints, and parsed into the
 final output types.
 
 ## Writing a validator with `v.fn`
@@ -9,7 +9,7 @@ Use `v.fn` to wrap any synchronous validation function. Thrown errors are caught
 invalid result.
 
 ```ts
-import { v } from 'formier';
+import { v } from 'formtery';
 
 const isDate = v.fn((input: string) => {
   const ok = /^\d{4}-\d{2}-\d{2}$/.test(input);
@@ -22,7 +22,7 @@ const isDate = v.fn((input: string) => {
 You can use your favorite validators as well:
 
 ```ts
-import { v } from 'formier';
+import { v } from 'formtery';
 import * as z from 'zod';
 
 const isDate = v.fn<string, Date>((input) => z.iso.date().parse(input));
@@ -44,7 +44,7 @@ Some validation rules can only be checked on the server. For these cases, use `v
 error recovery automatically.
 
 ```ts
-import { v } from 'formier';
+import { v } from 'formtery';
 
 const checkUsername = v.asyncFn<string, string>(async (input, signal) => {
   const res = await fetch(`/api/check-username?q=${input}`, { signal });
@@ -56,7 +56,7 @@ const checkUsername = v.asyncFn<string, string>(async (input, signal) => {
 ```
 
 The second argument to your function is an `AbortSignal`. Pass it to `fetch` or any signal-aware API. When the user
-input changes before the request finishes, formier aborts the previous request and starts a new one.
+input changes before the request finishes, formtery aborts the previous request and starts a new one.
 
 ## Displaying validation state
 

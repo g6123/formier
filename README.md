@@ -1,15 +1,15 @@
-# formier
+# formtery
 
-**formier** is the foundation library for complex React-based form UIs, built in the right way.
+**formtery** is the foundation library for complex React-based form UIs, built in the right way.
 
 ## Installation
 
 ```shell
-pnpm add formier
-yarn add formier
-npm add formier
+pnpm add formtery
+yarn add formtery
+npm add formtery
 ```
 
 ## Usage
 
-See the [documentation](https://g6123.github.io/formier).
+See the [documentation](https://g6123.github.io/formtery).

@@ -5,7 +5,7 @@ React hook that creates and manages a form with a group of fields.
 ## Import
 
 ```ts
-import { useForm } from 'formier';
+import { useForm } from 'formtery';
 ```
 
 ## Signature

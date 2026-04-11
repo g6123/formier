@@ -5,7 +5,7 @@ Factory function that creates a field store.
 ## Import
 
 ```ts
-import { field } from 'formier';
+import { field } from 'formtery';
 ```
 
 ## Overloads

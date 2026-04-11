@@ -1,8 +1,8 @@
 import { defineConfig } from 'vitepress';
 
 export default defineConfig({
-  base: '/formier/',
-  title: 'formier',
+  base: '/formtery/',
+  title: 'formtery',
   description: 'The foundation for complex form UIs, built in the right way',
   themeConfig: {
     nav: [
@@ -47,6 +47,6 @@ export default defineConfig({
       },
     ],
 
-    socialLinks: [{ icon: 'github', link: 'https://github.com/g6123/formier' }],
+    socialLinks: [{ icon: 'github', link: 'https://github.com/g6123/formtery' }],
   },
 });

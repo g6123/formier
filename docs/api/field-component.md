@@ -10,7 +10,7 @@ handler to a child function.
 ## Import
 
 ```ts
-import { Field } from 'formier';
+import { Field } from 'formtery';
 ```
 
 ## Props

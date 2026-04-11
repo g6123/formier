@@ -1,9 +1,9 @@
 {
-  "name": "formier",
+  "name": "formtery",
   "version": "0.1.0",
   "type": "module",
   "author": "cumul <gg6123@naver.com>",
-  "repository": "github:g6123/formier",
+  "repository": "github:g6123/formtery",
   "files": [
     "dist"
   ],

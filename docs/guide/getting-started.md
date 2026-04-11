@@ -5,15 +5,15 @@
 ::: code-group
 
 ```sh [pnpm]
-pnpm add formier
+pnpm add formtery
 ```
 
 ```sh [yarn]
-yarn add formier
+yarn add formtery
 ```
 
 ```sh [npm]
-npm add formier
+npm add formtery
 ```
 
 :::
@@ -31,7 +31,7 @@ npm add formier
 ## Example
 
 ```tsx
-import { Field, field, useForm, v } from 'formier';
+import { Field, field, useForm, v } from 'formtery';
 
 function ProfileForm() {
   const { fields, handleSubmit } = useForm({

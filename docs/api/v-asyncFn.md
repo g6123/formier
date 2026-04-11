@@ -5,7 +5,7 @@ Creates an asynchronous validator from a function that returns a `Promise`.
 ## Import
 
 ```ts
-import { v } from 'formier';
+import { v } from 'formtery';
 // use with `v.asyncFn`
 ```
 

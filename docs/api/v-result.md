@@ -1,11 +1,11 @@
 # v.result
 
-`v.result<T>` is the class used throughout formier to represent validation outcomes.
+`v.result<T>` is the class used throughout formtery to represent validation outcomes.
 
 ## Import
 
 ```ts
-import { v } from 'formier';
+import { v } from 'formtery';
 // use with `v.result`
 ```
 
