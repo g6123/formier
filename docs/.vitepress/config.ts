@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress';
 
 export default defineConfig({
+  base: '/formier/',
   title: 'formier',
   description: 'The foundation for complex form UIs, built in the right way',
   themeConfig: {
