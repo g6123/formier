@@ -18,5 +18,5 @@ features:
   - title: Functional Validators
     details: Supports both sync and async validators, with first-class transformation and composition of validation results through FP-inspired monadic APIs.
   - title: Minimal Design
-    details: One function `field()`, one hook `useForm()`, and one component `&lt;Field&gt;`. Minimal API surface with flexibility that just works with your existing validators and schemas.
+    details: One function `field()`, one hook `useForm()`, and one component `&lt;Controller&gt;`. Minimal API surface with flexibility that just works with your existing validators and schemas.
 ---

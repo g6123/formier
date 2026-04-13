@@ -1,9 +1,4 @@
-import { Field as FieldComponent } from './components.js';
-import type { Field as FieldType } from './types.js';
-
-type Field<Input, Value> = FieldType<Input, Value>;
-const Field = FieldComponent;
-
-export * from './helpers.js';
-export * from './hooks.js';
-export { Field };
+export { Controller as FieldController } from './components.js';
+export { field } from './helpers.js';
+export { useField, useFieldInput, type UseFieldResult } from './hooks.js';
+export type { Field } from './types.js';

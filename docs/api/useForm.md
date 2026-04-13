@@ -39,12 +39,17 @@ interface Form<Fields extends FormFields> {
 
 ### `form.fields`
 
-The fields object you passed in, typed as `Fields`. Use it to pass individual field stores to `<Field>` or `useField()`:
+The fields object you passed in, typed as `Fields`. Use it to pass individual field stores to `<Controller>` or
+`useField()`:
 
 ```tsx
-const { fields } = useForm({ fields: () => ({ email: field('') }) });
+const { fields } = useForm({
+  fields: () => ({
+    email: field(''),
+  }),
+});
 
-<Field store={fields.email}>{...}</Field>
+<Controller store={fields.email} render={(props) => /* ... */} />
 ```
 
 ---

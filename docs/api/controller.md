@@ -1,8 +1,4 @@
----
-outline: deep
----
-
-# \<Field\>
+# \<Controller\>
 
 A render prop component that subscribes to a field store and provides its current value, validation state, and change
 handler to a child function.
@@ -10,20 +6,20 @@ handler to a child function.
 ## Import
 
 ```ts
-import { Field } from 'formtery';
+import { Controller } from 'formtery';
 ```
 
 ## Props
 
-| Prop       | Type                                                 | Required | Description                                        |
-| ---------- | ---------------------------------------------------- | -------- | -------------------------------------------------- |
-| `store`    | `Field<Input, Value>`                                | Yes      | The field store to subscribe to                    |
-| `children` | `(props: UseFieldResult<Input, Value>) => ReactNode` | Yes      | Render function called with field props            |
-| `ref`      | `React.Ref<any>`                                     | No       | Forwarded and merged with the field's internal ref |
+| Prop     | Type                                                 | Required | Description                                        |
+| -------- | ---------------------------------------------------- | -------- | -------------------------------------------------- |
+| `store`  | `Controller<Input, Value>`                           | Yes      | The field store to subscribe to                    |
+| `render` | `(props: UseFieldResult<Input, Value>) => ReactNode` | Yes      | Render function called with field props            |
+| `ref`    | `React.Ref<any>`                                     | No       | Forwarded and merged with the field's internal ref |
 
 ## Render Props
 
-The `children` function receives a `UseFieldResult<Input, Value>` object:
+The `render` prop receives a `UseFieldResult<Input, Value>` object:
 
 | Property       | Type                     | Description                                                              |
 | -------------- | ------------------------ | ------------------------------------------------------------------------ |
@@ -35,9 +31,10 @@ The `children` function receives a `UseFieldResult<Input, Value>` object:
 ## Example
 
 ```tsx
-<Field store={fields.email}>
-  {({ ref, value, handleChange, state }) => (
-    <div>
+<Controller
+  store={fields.email}
+  render={({ ref, value, handleChange, state }) => (
+    <div className="...">
       <input
         ref={ref}
         type="email"
@@ -49,12 +46,12 @@ The `children` function receives a `UseFieldResult<Input, Value>` object:
       {state.isPending && <span>Validating...</span>}
     </div>
   )}
-</Field>
+/>
 ```
 
-## When to Use `<Field>` vs `useField()`
+## When to Use `<Controller>` vs `useField()`
 
-`<Field>` is a thin wrapper around the [`useField()`](/api/useField) hook. Use whichever fits your style:
+`<Controller>` is a thin wrapper around the [`useField()`](/api/useField) hook. Use whichever fits your style:
 
-- **`<Field>`**: convenient for inline render props directly in JSX
+- **`<Controller>`**: convenient for inline render props directly in JSX
 - **`useField()`**: better when building a reusable custom input component that takes a `store` prop

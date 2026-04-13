@@ -13,9 +13,7 @@ import { v } from 'formtery';
 
 const isDate = v.fn((input: string) => {
   const ok = /^\d{4}-\d{2}-\d{2}$/.test(input);
-  return ok
-    ? v.result.valid(new Date(input))
-    : v.result.invalid('Must be a valid email address');
+  return ok ? v.result.valid(new Date(input)) : v.result.invalid('Must be a valid email address');
 });
 ```
 
@@ -49,9 +47,7 @@ import { v } from 'formtery';
 const checkUsername = v.asyncFn<string, string>(async (input, signal) => {
   const res = await fetch(`/api/check-username?q=${input}`, { signal });
   const { available } = await res.json();
-  return available
-    ? v.result.valid(input)
-    : v.result.invalid('Username is already taken');
+  return available ? v.result.valid(input) : v.result.invalid('Username is already taken');
 });
 ```
 
@@ -60,11 +56,13 @@ input changes before the request finishes, formtery aborts the previous request 
 
 ## Displaying validation state
 
-The render prop from `<Field>` gives you `state: v.result<Value>`. Check `state.ok` to decide whether to show an error:
+The render prop from `<Controller>` gives you `state: v.result<Value>`. Check `state.ok` to decide whether to show an
+error:
 
 ```tsx {9,11}
-<Field store={fields.username}>
-  {({ ref, state, value, handleChange }) => (
+<Controller
+  store={fields.username}
+  render={({ ref, state, value, handleChange }) => (
     <Field>
       <FieldLabel htmlFor="username">Username</FieldLabel>
       <Input
@@ -76,15 +74,16 @@ The render prop from `<Field>` gives you `state: v.result<Value>`. Check `state.
       {!state.ok && <FieldError>{state.message}</FieldError>}
     </Field>
   )}
-</Field>
+/>
 ```
 
 The `state.isPending` boolean is `true` while the async validator is running. Use it to show a spinner or a
 "checking..." message:
 
 ```tsx {7}
-<Field store={fields.username}>
-  {({ ref, state, value, handleChange }) => (
+<Controller
+  store={fields.username}
+  render={({ ref, state, value, handleChange }) => (
     <Field>
       <FieldLabel htmlFor="username">Username</FieldLabel>
       <Input
@@ -97,7 +96,7 @@ The `state.isPending` boolean is `true` while the async validator is running. Us
       {!state.ok && <FieldError>{state.message}</FieldError>}
     </Field>
   )}
-</Field>
+/>
 ```
 
 Validation runs when the form is submitted via `form.handleSubmit` or when you call `form.validate()` manually.

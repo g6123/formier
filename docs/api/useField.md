@@ -1,7 +1,3 @@
----
-outline: deep
----
-
 # useField()
 
 React hook that subscribes to a field store and returns the current value, validation state, and change handler.

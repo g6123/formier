@@ -1,7 +1,3 @@
----
-outline: deep
----
-
 # useFieldInput()
 
 React hook that subscribes only to a field's current input value, without subscribing to its validation state.

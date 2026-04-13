@@ -78,7 +78,7 @@ const email = field('', isEmail);
 
 `Field<Input, Value>`
 
-A field store object that holds state and can be passed to `<Field>` or `useField()`.
+A field store object that holds state and can be passed to `<Controller>` or `useField()`.
 
 ### Properties
 

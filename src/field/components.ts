@@ -2,12 +2,12 @@ import type React from 'react';
 import { useField, type UseFieldResult } from './hooks.js';
 import type { Field } from './types.js';
 
-export interface FieldProps<Input, Value> {
+export interface ControllerProps<Input, Value> {
   ref?: React.Ref<any>;
   store: Field<Input, Value>;
-  children: (props: UseFieldResult<Input, Value>) => React.ReactNode;
+  render: (props: UseFieldResult<Input, Value>) => React.ReactNode;
 }
 
-export function Field<Input, Value>({ ref, store, children }: FieldProps<Input, Value>) {
-  return children(useField(store, ref));
+export function Controller<Input, Value>({ ref, store, render }: ControllerProps<Input, Value>) {
+  return render(useField(store, ref));
 }

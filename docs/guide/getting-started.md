@@ -23,8 +23,8 @@ npm add formtery
 - **`field()`** creates a small reactive store holding two pieces of state:
   - `input`: the current raw value from the user
   - `state`: the latest validation result
-- **`<Field>`** subscribes a component subtree to a single field's store. When `input` or `state` changes, only that
-  render prop re-renders.
+- **`<Controller>`** subscribes a component subtree to a single field's store. When `input` or `state` changes, only
+  that render prop re-renders.
 - **`useForm()`** groups field stores together and adds form-level operations: validate all at once, reset all to
   defaults, and create a submit handler.
 
@@ -59,23 +59,25 @@ function ProfileForm() {
         //                                ^? number
       })}
     >
-      <Field store={fields.fullName}>
-        {({ ref, value, handleChange }) => (
+      <Controller
+        store={fields.fullName}
+        render={({ ref, value, handleChange }) => (
           <label>
             Full Name
             <input ref={ref} value={value} onChange={(e) => handleChange(e.target.value)} />
           </label>
         )}
-      </Field>
-      <Field store={fields.age}>
-        {({ ref, state, value, handleChange }) => (
+      />
+      <Controller
+        store={fields.age}
+        render={({ ref, state, value, handleChange }) => (
           <label>
             Age
             <input ref={ref} type="number" value={value} onChange={(e) => handleChange(e.target.value)} />
             {!state.ok && <span>{state.message}</span>}
           </label>
         )}
-      </Field>
+      />
       <button type="submit">Submit</button>
     </form>
   );

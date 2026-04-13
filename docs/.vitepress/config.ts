@@ -25,9 +25,9 @@ export default defineConfig({
             text: 'Fields',
             items: [
               { text: 'field()', link: '/api/field' },
-              { text: '&lt;Field&gt;', link: '/api/field-component' },
               { text: 'useField()', link: '/api/useField' },
               { text: 'useFieldInput()', link: '/api/useFieldInput' },
+              { text: '&lt;Controller&gt;', link: '/api/controller' },
             ],
           },
           {
