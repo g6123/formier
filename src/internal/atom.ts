@@ -1,4 +1,4 @@
-import { useSyncExternalStore } from 'use-sync-external-store';
+import { useSyncExternalStore } from 'use-sync-external-store/shim';
 
 interface ReadonlyAtom<T> {
   get: () => T;
