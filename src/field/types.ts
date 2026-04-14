@@ -1,5 +1,6 @@
 import { ReadonlyAtom } from '../internal/atom.js';
 import { ValidationResult } from '../validation/result.js';
+import { ValidationTransaction } from '../validation/transaction.js';
 
 export interface Field<Input, Value> {
   ref: React.Ref<FieldElement>;
@@ -9,7 +10,7 @@ export interface Field<Input, Value> {
   focus(): void;
   set(input: Input): void;
   reset(): void;
-  validate(): ValidationResult<Value>;
+  validate(trx?: ValidationTransaction): ValidationResult<Value>;
 }
 
 export interface FieldElement {

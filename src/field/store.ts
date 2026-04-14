@@ -2,6 +2,7 @@ import React from 'react';
 import { Atom, atom } from '../internal/atom.js';
 import { evaluate, MaybeLazy } from '../internal/lazy.js';
 import { INIT, ValidationResult } from '../validation/result.js';
+import { ValidationTransaction } from '../validation/transaction.js';
 import { Validator } from '../validation/validator.js';
 import type { Field, FieldElement } from './types.js';
 
@@ -42,9 +43,17 @@ export class FieldStore<Input, Value> implements Field<Input, Value> {
     this.validator.cancel?.();
   }
 
-  validate() {
-    return this.validator.validate(this.input.get()).subscribe((state) => {
-      this.state.set(state);
-    });
+  validate(trx: ValidationTransaction = { shouldFocus: false }) {
+    return this.validator
+      .validate(this.input.get(), trx)
+      .subscribe((state) => {
+        this.state.set(state);
+      })
+      .tap(undefined, () => {
+        if (trx != null && trx.shouldFocus) {
+          this.focus();
+          trx.shouldFocus = false;
+        }
+      });
   }
 }

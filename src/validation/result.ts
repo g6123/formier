@@ -64,13 +64,13 @@ export class ValidationResult<T> {
     }
   }
 
-  tap(onValid?: (value: T) => void, onInvalid?: (message?: string) => void) {
+  tap(onValid?: (value: T) => void, onInvalid?: (instance: ValidationResult<T>) => void) {
     if (this.promise != null) {
       this.promise.then((v) => v.tap(onValid, onInvalid));
     } else if (this.ok) {
       onValid?.(this.unwrap());
     } else {
-      onInvalid?.(this.message);
+      onInvalid?.(this);
     }
     return this;
   }
