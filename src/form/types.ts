@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Field } from '../field/types.js';
 import { ValidationResult } from '../validation/result.js';
 
@@ -11,5 +12,5 @@ export interface Form<Fields extends FormFields> {
   fields: Fields;
   validate(): ValidationResult<FormValues<Fields>>;
   reset(): void;
-  handleSubmit(onValid?: (values: FormValues<Fields>) => void): void;
+  handleSubmit(onValid?: (values: FormValues<Fields>) => void): (event: React.SyntheticEvent) => void;
 }
