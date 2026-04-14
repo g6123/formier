@@ -1,18 +1,30 @@
 const EMPTY = Symbol();
 
+interface ValidationResultOptions {
+  cause?: ValidationResult<unknown>;
+}
+
 export class ValidationResult<T> {
   ok: boolean;
-  value: T | typeof EMPTY;
   message?: string;
+  cause?: ValidationResult<unknown>;
   isPending: boolean;
 
+  private value: T | typeof EMPTY;
   private promise?: Promise<ValidationResult<T>>;
 
-  constructor(ok: boolean, value: T | typeof EMPTY, promise?: Promise<ValidationResult<T>>, message?: string) {
+  constructor(
+    ok: boolean,
+    value: T | typeof EMPTY,
+    promise?: Promise<ValidationResult<T>>,
+    message?: string,
+    cause?: ValidationResult<unknown>,
+  ) {
     this.ok = ok;
     this.value = value;
     this.promise = promise;
     this.message = message;
+    this.cause = cause;
     this.isPending = promise != null;
   }
 
@@ -34,7 +46,7 @@ export class ValidationResult<T> {
     } else if (this.value !== EMPTY) {
       return new ValidationResult<U>(true, fn(this.value));
     } else {
-      return new ValidationResult<U>(this.ok, EMPTY);
+      return new ValidationResult<U>(this.ok, EMPTY, undefined, this.message, this.cause);
     }
   }
 
@@ -48,7 +60,7 @@ export class ValidationResult<T> {
     } else if (this.value !== EMPTY) {
       return fn(this.value);
     } else {
-      return new ValidationResult<U>(this.ok, EMPTY);
+      return new ValidationResult<U>(this.ok, EMPTY, undefined, this.message, this.cause);
     }
   }
 
@@ -73,16 +85,16 @@ export class ValidationResult<T> {
     return this.promise ?? Promise.resolve(this);
   }
 
-  static valid<T>(value: T) {
-    return new ValidationResult<T>(true, value);
+  static valid<T>(value: T, options?: ValidationResultOptions) {
+    return new ValidationResult<T>(true, value, undefined, undefined, options?.cause);
   }
 
-  static invalid(message?: string) {
-    return new ValidationResult<never>(false, EMPTY, undefined, message);
+  static invalid(message?: string, options?: ValidationResultOptions) {
+    return new ValidationResult<never>(false, EMPTY, undefined, message, options?.cause);
   }
 
-  static pending<T>(promise: Promise<ValidationResult<T>>) {
-    return new ValidationResult(true, EMPTY, promise);
+  static pending<T>(promise: Promise<ValidationResult<T>>, options?: ValidationResultOptions) {
+    return new ValidationResult(true, EMPTY, promise, undefined, options?.cause);
   }
 
   static all<O extends Record<string, ValidationResult<unknown>>>(
@@ -104,8 +116,9 @@ export class ValidationResult<T> {
       return this.pending(Promise.all(array.map((state) => state.toPromise())).then(this.allElements));
     }
 
-    if (array.some((result) => !result.ok)) {
-      return this.invalid();
+    const invalid = array.find((result) => !result.ok);
+    if (invalid != null) {
+      return this.invalid(undefined, { cause: invalid });
     }
 
     return this.valid(array.map((result) => result.unwrap()));
@@ -128,8 +141,9 @@ export class ValidationResult<T> {
       );
     }
 
-    if (entries.some(([, result]) => !result.ok)) {
-      return this.invalid();
+    const invalid = entries.find(([, result]) => !result.ok);
+    if (invalid != null) {
+      return this.invalid(undefined, { cause: invalid[1] });
     }
 
     return this.valid(Object.fromEntries(entries.map(([key, result]) => [key, result.unwrap()])));

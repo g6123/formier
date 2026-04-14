@@ -12,7 +12,7 @@ export const createForm = <Fields extends FormFields>(fields: Fields): Form<Fiel
         const resolvedState = resolvedStates[i]!;
         const [, field] = fieldEntries[i]!;
 
-        if (!resolvedState.ok) {
+        if (!resolvedState.ok && resolvedState.cause == null) {
           field.focus();
           break;
         }
