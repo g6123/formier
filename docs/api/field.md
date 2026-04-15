@@ -2,8 +2,6 @@
 
 Factory function that creates a field store.
 
-## Import
-
 ```ts
 import { field } from 'formtery';
 ```
@@ -72,8 +70,6 @@ const email = field('', isEmail);
 // Field<string, string>  (where isEmail is a custom Validator<string, string>)
 ```
 
----
-
 ## Returns
 
 `Field<Input, Value>`
@@ -82,25 +78,79 @@ A field store object that holds state and can be passed to `<Controller>` or `us
 
 ### Properties
 
-| Property | Type                            | Description                                                        |
-| -------- | ------------------------------- | ------------------------------------------------------------------ |
-| `ref`    | `React.Ref<FieldElement>`       | Attach to the DOM element to enable auto-focus on validation error |
-| `input`  | `ReadonlyAtom<Input>`           | Reactive atom holding the current input value                      |
-| `state`  | `ReadonlyAtom<v.result<Value>>` | Reactive atom holding the current validation result                |
+#### `ref`
 
-### Methods
+React ref to the element which renders the field. Attach this property to the element to enable auto-focus on validation
+error.
 
-| Method              | Description                                                                                              |
-| ------------------- | -------------------------------------------------------------------------------------------------------- |
-| `set(input: Input)` | Set a new input value. Resets validation state and cancels any pending async validation.                 |
-| `reset()`           | Reset the field to its `defaultInput`. Resets validation state and cancels any pending async validation. |
-| `validate()`        | Run the validator against the current input and subscribe to state updates. Returns `v.result<Value>`.   |
-| `focus()`           | Focus the DOM element referenced by `ref` and scroll it into view.                                       |
+```ts
+ref: React.Ref<FieldElement>
+```
 
-## Usage Notes
+---
 
-Field stores should be created **once** and remain stable across renders. The recommended pattern is to pass a factory
-function to `useForm`:
+#### `input`
+
+```ts
+input: ReadonlyAtom<Input>;
+```
+
+Reactive atom holding the current input value
+
+---
+
+#### `state`
+
+```ts
+state: ReadonlyAtom<ValidationResult<Value>>;
+```
+
+Reactive atom holding the current validation result
+
+### Instance Methods
+
+#### `set(input)` {#set}
+
+```ts
+set(input: Input): void;
+```
+
+Set a new input value. Resets validation state and cancels any pending async validation.
+
+---
+
+#### `reset()`
+
+```ts
+reset(): void;
+```
+
+Reset the field to its `defaultInput`. Resets validation state and cancels any pending async validation.
+
+---
+
+#### `validate()`
+
+```ts
+validate(trx?: ValidationTransaction): ValidationResult<Value>;
+```
+
+Run the validator against the current input and subscribe to state updates.
+
+---
+
+#### `focus()`
+
+```ts
+focus(): void;
+```
+
+Focus the DOM element referenced by `ref` and scroll it into view.
+
+## Notes
+
+The recommended pattern is to pass a factory function to `useForm` as it prevents redundant initialization of field
+stores:
 
 ```ts
 const { fields } = useForm({
@@ -110,12 +160,6 @@ const { fields } = useForm({
     password: field('', v.nonEmpty()),
   }),
 });
-```
-
-If you create a field outside `useForm`, wrap it in `useState`:
-
-```ts
-const [myField] = useState(() => field(''));
 ```
 
 Do **not** create fields at the top level of a component body without memoization:

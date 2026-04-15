@@ -22,6 +22,10 @@ export default defineConfig({
         text: 'API Reference',
         items: [
           {
+            text: 'Form',
+            items: [{ text: 'useForm()', link: '/api/useForm' }],
+          },
+          {
             text: 'Fields',
             items: [
               { text: 'field()', link: '/api/field' },
@@ -29,10 +33,6 @@ export default defineConfig({
               { text: 'useFieldInput()', link: '/api/useFieldInput' },
               { text: '&lt;Controller&gt;', link: '/api/controller' },
             ],
-          },
-          {
-            text: 'Form',
-            items: [{ text: 'useForm()', link: '/api/useForm' }],
           },
           {
             text: 'Validation',

@@ -2,83 +2,57 @@
 
 React hook that subscribes to a field store and returns the current value, validation state, and change handler.
 
-## Import
+The component re-renders whenever the field's `input` or `state` changes.
 
 ```ts
 import { useField } from 'formtery';
 ```
 
-## Signature
-
 ```ts
-function useField<Input, Value>(field: Field<Input, Value>, ref?: React.Ref<any>): UseFieldResult<Input, Value>;
+function useField<Input, Value>(
+  field: Field<Input, Value>,
+  ref?: React.Ref<any>,
+): UseFieldResult<Input, Value>;
 ```
 
-## Parameters
+## Params
 
-| Parameter | Type                  | Description                     |
-| --------- | --------------------- | ------------------------------- |
-| `field`   | `Field<Input, Value>` | The field store to subscribe to |
-| `ref`     | `React.Ref<any>`      | Optional external ref           |
+- `field` The field store to subscribe to
+- `ref` External ref (_Optional)_
 
 ## Returns
 
-`UseFieldResult<Input, Value>`
-
-| Property       | Type                     | Description                                                              |
-| -------------- | ------------------------ | ------------------------------------------------------------------------ |
-| `value`        | `Input`                  | Current input value. Use as the controlled value of your input element.  |
-| `handleChange` | `(value: Input) => void` | Call with a new value whenever the input changes.                        |
-| `state`        | `v.result<Value>`        | Current validation result.                                               |
-| `ref`          | `React.Ref<any>`         | Attach to the root DOM element to enable auto-focus on validation error. |
-
-The component re-renders whenever the field's `input` or `state` changes.
-
-## Example: Custom Input Component
-
-```tsx
-import { useField, type Field } from 'formtery';
-
-interface TextInputProps {
-  store: Field<string, string>;
-  label: string;
-  type?: string;
-}
-
-function TextInput({ store, label, type = 'text' }: TextInputProps) {
-  const { ref, value, handleChange, state } = useField(store);
-
-  return (
-    <label>
-      {label}
-      <input
-        ref={ref}
-        type={type}
-        value={value}
-        onChange={(e) => handleChange(e.target.value)}
-        aria-invalid={!state.ok || undefined}
-      />
-      {!state.ok && <span role="alert">{state.message}</span>}
-    </label>
-  );
+```ts
+interface UseFieldResult<Input, Value> {
+  ref: React.Ref<any>;
+  value: Input;
+  state: ValidationResult<Value>;
+  setValue: (value: React.SetStateAction<Input>) => void;
 }
 ```
 
-Use it in a form:
+- `ref` Attach to the element to enable auto-focus on validation error.
+- `value` Current input value. Use as the controlled value of your input element.
+- `setValue` Call with a new value whenever the input changes.
+- `state` Current validation result.
 
-```tsx
-<TextInput store={fields.email} label="Email" type="email" />
-<TextInput store={fields.password} label="Password" type="password" />
-```
+## Notes
 
-## Ref Forwarding
+### Ref Forwarding
 
 If you need to attach your own ref to the element alongside formtery's internal ref, pass it as the second argument. The
 refs are merged automatically.
 
 ```tsx
 function TextInput({ inputRef, store }: TextInputProps) {
-  const { ref, value, state, handleChange } = useField(store, inputRef);
-  return <input ref={ref} value={value} onChange={(e) => handleChange(e.target.value)} />;
+  const { ref, value, setValue, state } = useField(store, inputRef);
+
+  return (
+    <input
+      ref={ref}
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
+    />
+  );
 }
 ```

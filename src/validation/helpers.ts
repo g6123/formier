@@ -20,7 +20,8 @@ export const fn = <Input, Value>(
   },
 });
 
-interface AsyncValidateOptions extends ValidateOptions {
+interface AsyncValidateOptions {
+  trx: ValidationTransaction;
   signal: AbortSignal;
 }
 

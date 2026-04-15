@@ -59,18 +59,13 @@ input changes before the request finishes, formtery aborts the previous request 
 The render prop from `<Controller>` gives you `state: v.result<Value>`. Check `state.ok` to decide whether to show an
 error:
 
-```tsx {9,11}
+```tsx {6-7}
 <Controller
   store={fields.username}
-  render={({ ref, state, value, handleChange }) => (
+  render={({ ref, value, setValue, state }) => (
     <Field>
       <FieldLabel htmlFor="username">Username</FieldLabel>
-      <Input
-        id="username"
-        value={value}
-        onChange={(event) => handleChange(event.target.value)}
-        aria-invalid={!state.ok}
-      />
+      <Input id="username" value={value} onChange={(event) => setValue(event.target.value)} aria-invalid={!state.ok} />
       {!state.ok && <FieldError>{state.message}</FieldError>}
     </Field>
   )}
@@ -80,17 +75,17 @@ error:
 The `state.isPending` boolean is `true` while the async validator is running. Use it to show a spinner or a
 "checking..." message:
 
-```tsx {7}
+```tsx {8}
 <Controller
   store={fields.username}
-  render={({ ref, state, value, handleChange }) => (
+  render={({ ref, value, setValue, state }) => (
     <Field>
       <FieldLabel htmlFor="username">Username</FieldLabel>
       <Input
         id="username"
         endIcon={state.isPending && <Spinner />}
         value={value}
-        onChange={(event) => handleChange(event.target.value)}
+        onChange={(event) => setValue(event.target.value)}
         aria-invalid={!state.ok}
       />
       {!state.ok && <FieldError>{state.message}</FieldError>}

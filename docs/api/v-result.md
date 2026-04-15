@@ -1,8 +1,6 @@
 # v.result
 
-`v.result<T>` is the class used throughout formtery to represent validation outcomes.
-
-## Import
+`v.result<T>` is an object to represent validation outcomes.
 
 ```ts
 import { v } from 'formtery';
@@ -16,7 +14,7 @@ import { v } from 'formtery';
 Creates a valid result holding a typed value.
 
 ```ts
-static valid<T>(value: T): v.result<T>
+v.result.valid<T>(value: T): v.result<T>
 ```
 
 **Example:**
@@ -33,7 +31,7 @@ return v.result.valid(input.trim()); // v.result<string>
 Creates an invalid result with an optional error message.
 
 ```ts
-static invalid(message?: string): v.result<never>
+v.result.invalid(message?: string): v.result<never>
 ```
 
 **Example:**
@@ -52,12 +50,17 @@ The `message` is available via `result.message` and is typically displayed to th
 Combines multiple `v.result` values into one. Accepts either a record (object) or an array.
 
 ```ts
-static all<O extends Record<string, v.result<unknown>>>(object: O): v.result<{ [key in keyof O]: ... }>
-static all<T>(array: Array<v.result<T>>): v.result<Array<T>>
+v.result.all<O extends Record<string, v.result<unknown>>>(
+  object: O
+): v.result<{ [key in keyof O]: ... }>
+```
+
+```ts
+v.result.all<T>(array: Array<v.result<T>>): v.result<Array<T>>
 ```
 
 - Returns **valid** if all results are valid, with the combined values.
-- Returns **invalid** if any result is invalid, with no message.
+- Returns **invalid** if any result is invalid, with the cause.
 - Returns **pending** if any result is still pending; resolves once all pending results settle.
 
 **Example:**
@@ -69,7 +72,10 @@ const combined = v.result.all({
 });
 // v.result<{ name: string; age: number }>
 
-const list = v.result.all([v.result.valid(1), v.result.valid(2)]);
+const list = v.result.all([
+  v.result.valid(1),
+  v.result.valid(2),
+]);
 // v.result<number[]>
 ```
 
@@ -95,17 +101,27 @@ Present only on invalid results. Set by `v.result.invalid(message)` or by error 
 
 ---
 
+### `cause` {#cause}
+
+```ts
+cause?: v.result<unknown>
+```
+
+The original validation result when multiple validation results have been composed with [`v.result.all()`](#all).
+
+---
+
 ### `isPending` {#ispending}
 
 ```ts
 isPending: boolean;
 ```
 
-`true` when the result wraps an unresolved promise (created by `v.result.pending`).
+`true` when the result wraps an unresolved promise.
 
 ## Instance Methods
 
-### `result.map(fn)` {#map}
+### `map(fn)` {#map}
 
 Transforms the valid value. Returns a new `v.result<U>`. For pending results, the transform is deferred until the
 promise resolves.
@@ -125,7 +141,7 @@ const trimmed = v.result.valid('  hello  ').map((s) => s.trim());
 
 ---
 
-### `result.flatMap(fn)` {#flatmap}
+### `flatMap(fn)` {#flatmap}
 
 Monadic bind. Chains two validation steps together. `fn` receives the valid value and returns a new `v.result<U>`.
 Useful for composing validators where the second depends on the first passing.
@@ -138,7 +154,7 @@ Invalid and pending results pass through without calling `fn`.
 
 ---
 
-### `result.tap(onValid?, onInvalid?)` {#tap}
+### `tap(onValid?, onInvalid?)` {#tap}
 
 Runs a side effect based on the result state. Returns `this` for chaining.
 

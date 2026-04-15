@@ -61,19 +61,19 @@ function ProfileForm() {
     >
       <Controller
         store={fields.fullName}
-        render={({ ref, value, handleChange }) => (
+        render={({ ref, value, setValue }) => (
           <label>
             Full Name
-            <input ref={ref} value={value} onChange={(e) => handleChange(e.target.value)} />
+            <input ref={ref} value={value} onChange={(e) => setValue(e.target.value)} />
           </label>
         )}
       />
       <Controller
         store={fields.age}
-        render={({ ref, state, value, handleChange }) => (
+        render={({ ref, value, setValue, state }) => (
           <label>
             Age
-            <input ref={ref} type="number" value={value} onChange={(e) => handleChange(e.target.value)} />
+            <input ref={ref} type="number" value={value} onChange={(e) => setValue(e.target.value)} />
             {!state.ok && <span>{state.message}</span>}
           </label>
         )}
