@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useMergeRefs } from 'react-merge-refs';
-import { useAtomValue } from '../internal/atom.js';
+import { useAtomValue } from '../atom/hooks.js';
 import { isFunction } from '../internal/misc.js';
 import { ValidationResult } from '../validation/result.js';
 import { Field } from './types.js';

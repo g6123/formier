@@ -1,5 +1,6 @@
 import React from 'react';
-import { Atom, atom } from '../internal/atom.js';
+import { atom } from '../atom/store.js';
+import { Atom } from '../atom/types.js';
 import { evaluate, MaybeLazy } from '../internal/lazy.js';
 import { INIT, ValidationResult } from '../validation/result.js';
 import { ValidationTransaction } from '../validation/transaction.js';

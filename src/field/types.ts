@@ -1,4 +1,4 @@
-import { ReadonlyAtom } from '../internal/atom.js';
+import { ReadonlyAtom } from '../atom/types.js';
 import { ValidationResult } from '../validation/result.js';
 import { ValidationTransaction } from '../validation/transaction.js';
 
