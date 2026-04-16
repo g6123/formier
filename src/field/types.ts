@@ -2,7 +2,7 @@ import { ReadonlyAtom } from '../internal/atom.js';
 import { ValidationResult } from '../validation/result.js';
 import { ValidationTransaction } from '../validation/transaction.js';
 
-export interface Field<Input, Value> {
+export interface Field<Input, Value = Input> {
   ref: React.Ref<FieldElement>;
   input: ReadonlyAtom<Input>;
   state: ReadonlyAtom<ValidationResult<Value>>;
