@@ -30,7 +30,6 @@ export default defineConfig({
             items: [
               { text: 'field()', link: '/api/field' },
               { text: 'useField()', link: '/api/useField' },
-              { text: 'useFieldInput()', link: '/api/useFieldInput' },
               { text: '&lt;Controller&gt;', link: '/api/controller' },
             ],
           },

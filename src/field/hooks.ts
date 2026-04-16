@@ -30,7 +30,3 @@ export function useField<Input, Value>(field: Field<Input, Value>, ref?: React.R
 
   return { ref: mergedRef, value, state, setValue };
 }
-
-export function useFieldInput<InputT, ValueT>(store: Field<InputT, ValueT>): InputT {
-  return useAtomValue(store.input);
-}
