@@ -68,3 +68,11 @@ export const required = <T extends {}>(message?: string): Validator<T | null, T>
 export const nonEmpty = (message?: string): Validator<string, string> => ({
   validate: (input) => (input !== '' ? ValidationResult.valid(input) : ValidationResult.invalid(message)),
 });
+
+export const compose = <T, U, V>(v1: Validator<T, U>, v2: Validator<U, V>): Validator<T, V> => ({
+  validate: (t, trx) => v1.validate(t, trx).flatMap((u) => v2.validate(u, trx)),
+  cancel: () => {
+    v1.cancel?.();
+    v2.cancel?.();
+  },
+});
