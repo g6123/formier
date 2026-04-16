@@ -1,8 +1,8 @@
 import { useAtomValue } from './hooks.js';
-import { Atom } from './types.js';
+import { ReadonlyAtom } from './types.js';
 
 export interface ReadProps<T> {
-  store: Atom<T>;
+  store: ReadonlyAtom<T>;
   children: (value: T) => React.ReactNode;
 }
 
