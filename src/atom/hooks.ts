@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { useSyncExternalStore } from 'use-sync-external-store';
+import { useSyncExternalStore } from 'use-sync-external-store/shim';
 import { isFunction } from '../internal/misc.js';
 import { Atom, ReadonlyAtom } from './types.js';
 
