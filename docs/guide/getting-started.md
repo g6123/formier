@@ -44,7 +44,7 @@ function ProfileForm() {
             return v.result.invalid('Age should be a number');
           }
 
-          return parseInt(v);
+          return v.result.valid(parseInt(v));
         }),
       ),
     }),
