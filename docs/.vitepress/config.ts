@@ -39,7 +39,7 @@ export default defineConfig({
               { text: 'v.fn', link: '/api/v-fn' },
               { text: 'v.asyncFn', link: '/api/v-asyncFn' },
               { text: 'v.result', link: '/api/v-result' },
-              { text: 'Built-in Validators', link: '/api/v-built-in' },
+              { text: 'Built-in Validators', link: '/api/v-builtin' },
             ],
           },
         ],

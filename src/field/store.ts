@@ -5,9 +5,9 @@ import { evaluate, MaybeLazy } from '../internal/lazy.js';
 import { INIT, ValidationResult } from '../validation/result.js';
 import { ValidationTransaction } from '../validation/transaction.js';
 import { Validator } from '../validation/validator.js';
-import type { Field, FieldElement } from './types.js';
+import type { FieldElement, FieldStore } from './types.js';
 
-export class FieldStore<Input, Value> implements Field<Input, Value> {
+export class FieldStoreImpl<Input, Value> implements FieldStore<Input, Value> {
   ref: React.RefObject<FieldElement>;
   input: Atom<Input>;
   state: Atom<ValidationResult<Value>>;

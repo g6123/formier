@@ -3,7 +3,7 @@ import { useMergeRefs } from 'react-merge-refs';
 import { useAtomValue } from '../atom/hooks.js';
 import { isFunction } from '../internal/misc.js';
 import { ValidationResult } from '../validation/result.js';
-import { Field } from './types.js';
+import { FieldStore } from './types.js';
 
 export interface UseFieldResult<Input, Value> {
   ref: React.Ref<any>;
@@ -12,20 +12,23 @@ export interface UseFieldResult<Input, Value> {
   setValue: (value: React.SetStateAction<Input>) => void;
 }
 
-export function useField<Input, Value>(field: Field<Input, Value>, ref?: React.Ref<any>): UseFieldResult<Input, Value> {
-  const mergedRef = useMergeRefs([ref, field.ref]);
-  const value = useAtomValue(field.input);
-  const state = useAtomValue(field.state);
+export function useField<Input, Value>(
+  store: FieldStore<Input, Value>,
+  ref?: React.Ref<any>,
+): UseFieldResult<Input, Value> {
+  const mergedRef = useMergeRefs([ref, store.ref]);
+  const value = useAtomValue(store.input);
+  const state = useAtomValue(store.state);
 
   const setValue = useCallback(
     (action: React.SetStateAction<Input>) => {
       if (isFunction(action)) {
-        field.set(action(field.input.get()));
+        store.set(action(store.input.get()));
       } else {
-        field.set(action);
+        store.set(action);
       }
     },
-    [field],
+    [store],
   );
 
   return { ref: mergedRef, value, state, setValue };

@@ -10,14 +10,14 @@ import { useField } from 'formtery';
 
 ```ts
 function useField<Input, Value>(
-  field: Field<Input, Value>,
+  store: FieldStore<Input, Value>,
   ref?: React.Ref<any>,
 ): UseFieldResult<Input, Value>;
 ```
 
 ## Params
 
-- `field` The field store to subscribe to
+- `store` The field store to subscribe to
 - `ref` External ref (_Optional)_
 
 ## Returns

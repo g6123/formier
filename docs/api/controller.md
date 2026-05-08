@@ -12,7 +12,7 @@ import { Controller } from 'formtery';
 ```ts
 interface ControllerProps<Input, Value> {
   ref?: React.Ref<any>;
-  store: Field<Input, Value>;
+  store: FieldStore<Input, Value>;
   render: (props: UseFieldResult<Input, Value>) => React.ReactNode;
 }
 ```

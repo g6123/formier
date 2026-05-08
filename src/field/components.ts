@@ -1,10 +1,10 @@
 import type React from 'react';
 import { useField, type UseFieldResult } from './hooks.js';
-import type { Field } from './types.js';
+import type { FieldStore } from './types.js';
 
 export interface ControllerProps<Input, Value> {
   ref?: React.Ref<any>;
-  store: Field<Input, Value>;
+  store: FieldStore<Input, Value>;
   render: (props: UseFieldResult<Input, Value>) => React.ReactNode;
 }
 

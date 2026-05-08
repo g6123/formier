@@ -13,7 +13,7 @@ interface UseFormOptions<Fields extends FormFields> {
 
 function useForm<Fields extends FormFields>(
   options: UseFormOptions<Fields>
-): Form<Fields>
+): FormStore<Fields>
 ```
 
 ## Params
@@ -22,7 +22,7 @@ function useForm<Fields extends FormFields>(
 
 ## Returns
 
-`Form<Fields>`
+`FormStore<Fields>`
 
 A store object which holds group of fields and provides actions against them.
 

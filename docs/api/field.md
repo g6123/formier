@@ -16,15 +16,15 @@ type.
 **Signature:**
 
 ```ts
-function field<T extends {}>(defaultInput: T): Field<T, T>;
+function FieldStore<T extends {}>(defaultInput: T): FieldStore<T, T>;
 ```
 
 **Examples:**
 
 ```ts
-const name = field(''); // Field<string, string>
-const count = field(0); // Field<number, number>
-const tags = field<string[]>([]); // Field<string[], string[]>
+const name = field(''); // FieldStore<string, string>
+const count = field(0); // FieldStore<number, number>
+const tags = FieldStore<string[]>([]); // FieldStore<string[], string[]>
 ```
 
 ---
@@ -37,7 +37,7 @@ the validator handles the `null` case.
 **Signature:**
 
 ```ts
-function field<Input, Value>(validate: Validator<Input, Value>): Field<Input, Value>;
+function FieldStore<Input, Value>(validate: Validator<Input, Value>): FieldStore<Input, Value>;
 ```
 
 **Example:**
@@ -45,7 +45,7 @@ function field<Input, Value>(validate: Validator<Input, Value>): Field<Input, Va
 ```ts
 // Input is number | null, but after v.required the output is number
 const age = field(v.required<number>('Age is required'));
-// Field<number | null, number>
+// FieldStore<number | null, number>
 ```
 
 ---
@@ -57,22 +57,22 @@ Creates a field with both a default input value and a validator.
 **Signature:**
 
 ```ts
-function field<Input, Value>(defaultInput: Input, validate: Validator<Input, Value>): Field<Input, Value>;
+function FieldStore<Input, Value>(defaultInput: Input, validate: Validator<Input, Value>): FieldStore<Input, Value>;
 ```
 
 **Examples:**
 
 ```ts
 const username = field('', v.nonEmpty('Username is required'));
-// Field<string, string>
+// FieldStore<string, string>
 
 const email = field('', isEmail);
-// Field<string, string>  (where isEmail is a custom Validator<string, string>)
+// FieldStore<string, string>  (where isEmail is a custom Validator<string, string>)
 ```
 
 ## Returns
 
-`Field<Input, Value>`
+`FieldStore<Input, Value>`
 
 A field store object that holds state and can be passed to `<Controller>` or `useField()`.
 
