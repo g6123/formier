@@ -31,28 +31,28 @@ npm add formtery
 ## Example
 
 ```tsx
-import { Field, field, useForm, v } from 'formtery';
+import { Controller, field, useForm, v } from 'formtery';
+
+const fields = () => ({
+  fullName: field('', v.nonEmpty()),
+  age: field<string, number>(
+    '',
+    v.fn((input) => {
+      if (!/^\d$+/.test(input)) {
+        return v.result.invalid('Age should be a number');
+      }
+
+      return v.result.valid(parseInt(v));
+    }),
+  ),
+});
 
 function ProfileForm() {
-  const { fields, handleSubmit } = useForm({
-    fields: () => ({
-      fullName: field('', v.nonEmpty()),
-      age: field<string, number>(
-        '',
-        v.fn((input) => {
-          if (!/^\d$+/.test(input)) {
-            return v.result.invalid('Age should be a number');
-          }
-
-          return v.result.valid(parseInt(v));
-        }),
-      ),
-    }),
-  });
+  const form = useForm({ fields });
 
   return (
     <form
-      onSubmit={handleSubmit((values) => {
+      onSubmit={form.handleSubmit((values) => {
         console.log(`Hello ${values.fullName}`);
         //                          ^? string
         console.log(`Your age is ${values.age}`);
@@ -60,7 +60,7 @@ function ProfileForm() {
       })}
     >
       <Controller
-        store={fields.fullName}
+        store={form.fields.fullName}
         render={({ ref, value, setValue }) => (
           <label>
             Full Name
@@ -69,7 +69,7 @@ function ProfileForm() {
         )}
       />
       <Controller
-        store={fields.age}
+        store={form.fields.age}
         render={({ ref, value, setValue, state }) => (
           <label>
             Age
